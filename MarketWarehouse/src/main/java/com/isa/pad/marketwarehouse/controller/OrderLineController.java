@@ -126,7 +126,7 @@ public class OrderLineController {
     public ResponseEntity<?> updateOrderLine(@PathVariable("id") String id, @RequestBody OrderLine o) {
         OrderLine foundOrderLine = orderLineService.findByOrderLineId(id);
         if (foundOrderLine != null) {
-            foundOrderLine.setProduct(StringUtils.isEmpty(o.getProduct()) ? foundOrderLine.getProduct() : o.getProduct());
+            foundOrderLine.setProduct(o.getProduct());
             foundOrderLine.setAmount(StringUtils.isEmpty(o.getAmount()) ? foundOrderLine.getAmount() : o.getAmount());
             orderLineService.updateOrderLine(foundOrderLine);
             foundOrderLine.add(linkTo(methodOn(OrderLineController.class).getOrderLineById(foundOrderLine.getOrderLineId())).withSelfRel());

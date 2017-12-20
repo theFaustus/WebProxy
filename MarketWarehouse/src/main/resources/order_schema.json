@@ -1,0 +1,45 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "properties": {
+    "customer": {
+      "$id": "/properties/customer",
+      "type": "object",
+      "properties": {
+        "customerId": {
+          "$id": "/properties/customer/properties/customerId",
+          "type": "string",
+          "title": "The Customerid Schema.",
+          "description": "An explanation about the purpose of this instance.",
+          "default": "",
+          "examples": [
+            "5a3acc58e7af7e20f45c52f2"
+          ]
+        }
+      }
+    },
+    "orderlinelist": {
+      "$id": "/properties/orderlinelist",
+      "type": "array",
+      "items": {
+        "$id": "/properties/orderlinelist/items",
+        "type": "object",
+        "properties": {
+          "orderLineId": {
+            "$id": "/properties/orderlinelist/items/properties/orderLineId",
+            "type": "string",
+            "title": "The Orderlineid Schema.",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+              "5a3acc58e7af7e20f45c52f5"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
+
