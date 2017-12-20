@@ -11,6 +11,6 @@ import java.util.List;
 public interface CustomerRepository extends MongoRepository<Customer, String>{
     List<Customer> findByFirstNameAndLastName(String firstName, String lastName);
     List<Customer> findByFirstNameStartingWith(String text);
-    List<Customer> findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContainingOrAddressIgnoreCaseContaining(String text);
+    List<Customer> findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContainingOrAddressIgnoreCaseContaining(String fname, String lname, String address);
 
 }

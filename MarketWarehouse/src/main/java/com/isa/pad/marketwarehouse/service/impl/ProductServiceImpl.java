@@ -38,7 +38,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findByAnyField(String q) {
-        return productRepository.findByNameIgnoreCaseContainingOrUnitPriceIgnoreCaseContainingOrCodeIgnoreCaseContaining(q);
+        return productRepository.findByNameIgnoreCaseContainingOrUnitPriceIgnoreCaseContainingOrCodeIgnoreCaseContaining(q, q, q);
     }
 
     @Override
