@@ -1,33 +1,42 @@
 package com.isa.pad.marketwarehouse.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.data.annotation.Id;
+import org.springframework.hateoas.ResourceSupport;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * Created by Faust on 12/20/2017.
  */
-public class Customer {
-    private String id;
-
+@XmlRootElement
+public class Customer extends ResourceSupport {
+    @Id
+    @JsonProperty("customerID")
+    private String customerId;
+    @JsonProperty("firstName")
     private String firstName;
-
+    @JsonProperty("lastName")
     private String lastName;
-
+    @JsonProperty("address")
     private String address;
 
     public Customer() {
     }
-
-    public Customer(String id, String firstName, String lastName, String address) {
-        this.id = id;
+    @JsonCreator
+    public Customer(String firstName, String lastName, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
     }
 
-    public String getId() {
-        return id;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstName() {
@@ -82,7 +91,7 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "id='" + id + '\'' +
+                "customerId='" + customerId + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
