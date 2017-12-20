@@ -9,6 +9,7 @@ import com.isa.pad.marketwarehouse.repository.OrderRepository;
 import com.isa.pad.marketwarehouse.service.CustomerService;
 import com.isa.pad.marketwarehouse.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -64,7 +65,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public boolean orderExists(Order o) {
-        return orderRepository.exists(o.getOrderId());
+        return orderRepository.exists(Example.of(o));
     }
 
     @Override

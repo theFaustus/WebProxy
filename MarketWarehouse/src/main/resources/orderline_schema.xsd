@@ -15,9 +15,6 @@
   <xs:complexType name="product">
         <xs:sequence>
           <xs:element name="productId" type="xs:string" form="unqualified" minOccurs="1"/>
-          <xs:element name="name" type="xs:string" form="unqualified" minOccurs="1"/>
-          <xs:element name="unitPrice" type="xs:decimal" form="unqualified" minOccurs="1"/>
-          <xs:element name="code" type="xs:string" form="unqualified" minOccurs="1"/>
         </xs:sequence>
   </xs:complexType>
 </xs:schema>
