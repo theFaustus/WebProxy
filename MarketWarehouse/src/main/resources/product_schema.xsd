@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema elementFormDefault="qualified" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:atom="http://www.w3.org/2005/Atom">
+
+  <xs:element name="product" type="product"/>
+
+  <xs:complexType name="product">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string" form="unqualified" minOccurs="1"/>
+          <xs:element name="unitPrice" type="xs:decimal" form="unqualified" minOccurs="1"/>
+          <xs:element name="code" type="xs:string" form="unqualified" minOccurs="1"/>
+        </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

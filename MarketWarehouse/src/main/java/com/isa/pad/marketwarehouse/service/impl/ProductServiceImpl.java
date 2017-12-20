@@ -9,6 +9,7 @@ import com.isa.pad.marketwarehouse.repository.ProductRepository;
 import com.isa.pad.marketwarehouse.service.CustomerService;
 import com.isa.pad.marketwarehouse.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +42,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> findByCodeStartingWith(String text) {
+        return productRepository.findByCodeStartingWith(text);
+    }
+
+    @Override
     public List<Product> findAllByLimit(int startIndex, int endIndex) {
         Pageable pageable = new PageRequest(startIndex, endIndex);
         Page<Product> all = productRepository.findAll(pageable);
@@ -69,7 +75,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public boolean productExists(Product p) {
-        return productRepository.exists(p.getProductId());
+        return productRepository.exists(Example.of(p));
     }
 
     @Override

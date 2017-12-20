@@ -14,6 +14,8 @@ public interface ProductService {
 
     List<Product> findByAnyField(String q);
 
+    List<Product> findByCodeStartingWith(String text);
+
     List<Product> findAllByLimit(int startIndex, int endIndex);
 
     Product saveProduct(Product p);

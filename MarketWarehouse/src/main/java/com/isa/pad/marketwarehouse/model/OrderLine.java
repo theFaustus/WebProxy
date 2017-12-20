@@ -30,6 +30,11 @@ public class OrderLine extends ResourceSupport {
         this.product = product;
     }
 
+    public OrderLine(Product product, int amount) {
+        this.product = product;
+        this.amount = amount;
+    }
+
     public OrderLine() {
     }
 

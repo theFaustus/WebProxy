@@ -30,6 +30,12 @@ public class Product extends ResourceSupport {
     public Product() {
     }
 
+    public Product(String name, BigDecimal unitPrice, String code) {
+        this.name = name;
+        this.unitPrice = unitPrice;
+        this.code = code;
+    }
+
     public Product(String productId, String name, BigDecimal unitPrice, String code) {
         this.productId = productId;
         this.name = name;

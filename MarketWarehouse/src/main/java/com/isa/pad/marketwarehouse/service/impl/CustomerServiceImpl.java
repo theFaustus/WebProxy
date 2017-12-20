@@ -5,6 +5,7 @@ import com.isa.pad.marketwarehouse.model.Customer;
 import com.isa.pad.marketwarehouse.repository.CustomerRepository;
 import com.isa.pad.marketwarehouse.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -70,7 +71,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean customerExists(Customer c) {
-        return customerRepository.exists(c.getCustomerId());
+        return customerRepository.exists(Example.of(c));
     }
 
     @Override

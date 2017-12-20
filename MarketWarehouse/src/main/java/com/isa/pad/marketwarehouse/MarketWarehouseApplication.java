@@ -3,7 +3,13 @@ package com.isa.pad.marketwarehouse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import com.isa.pad.marketwarehouse.model.Customer;
+import com.isa.pad.marketwarehouse.model.Order;
+import com.isa.pad.marketwarehouse.model.OrderLine;
+import com.isa.pad.marketwarehouse.model.Product;
 import com.isa.pad.marketwarehouse.repository.CustomerRepository;
+import com.isa.pad.marketwarehouse.repository.OrderLineRepository;
+import com.isa.pad.marketwarehouse.repository.OrderRepository;
+import com.isa.pad.marketwarehouse.repository.ProductRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +25,7 @@ import org.springframework.http.converter.json.AbstractJackson2HttpMessageConver
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.math.BigDecimal;
 import java.util.List;
 @SpringBootApplication
 @ComponentScan(basePackages = "com.isa.pad.marketwarehouse")
@@ -72,32 +79,31 @@ public class MarketWarehouseApplication extends WebMvcConfigurerAdapter {
         }
     }
 
-	/*@Bean
-    public CommandLineRunner initOrderItems(OrderItemRepository orderItemRepository, ProductRepository productRepository,
-											OrderRepository orderRepository, CustomerRepository customerRepository) {
+	@Bean
+    public CommandLineRunner initOrderItems(OrderLineRepository orderLineRepository, ProductRepository productRepository,
+                                            OrderRepository orderRepository, CustomerRepository customerRepository) {
 		return (args) -> {
 			productRepository.deleteAll();
-			orderItemRepository.deleteAll();
+			orderLineRepository.deleteAll();
 			orderRepository.deleteAll();
 
-			Product butter = new Product(new BigDecimal("45.00"), "Butter");
+			Product butter = new Product("Butter", new BigDecimal(45.00), "BUTTER897632SD");
 			productRepository.save(butter);
 
-			OrderItem butterItem = new OrderItem(2, butter);
-			orderItemRepository.save(butterItem);
+			OrderLine butterItem = new OrderLine(butter, 2);
+			orderLineRepository.save(butterItem);
 
-			List<Customer> customers = customerRepository.findByName("Mike");
+			List<Customer> customers = customerRepository.findByFirstNameAndLastName("Mike", "Spike");
 
 			Order order = new Order(customers.get(0));
-			order.addOrderItem(butterItem);
+			order.add(butterItem);
 			orderRepository.save(order);
 
 			for (Order o : orderRepository.findAll()) {
 				LOGGER.info("Order: " + o);
-				LOGGER.info("Order itemd: " + o.getOrderItems());
-				LOGGER.info("Cost: " + o.getTotalCost());
+				LOGGER.info("Order itemd: " + o.getOrderLineList());
 				LOGGER.info("---------------------------");
 			}
 		};
-	}*/
+	}
 }

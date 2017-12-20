@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.hateoas.ResourceSupport;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class Order extends ResourceSupport{
     private Customer customer;
     @JsonProperty("orderlinelist")
     @DBRef
-    private List<OrderLine> orderLineList;
+    private List<OrderLine> orderLineList = new ArrayList<>();
     @JsonProperty("date")
     private Date orderDate = new Date();
 
@@ -68,6 +69,10 @@ public class Order extends ResourceSupport{
 
     public void setOrderDate(Date orderDate) {
         this.orderDate = orderDate;
+    }
+
+    public void add(OrderLine o){
+        orderLineList.add(o);
     }
 
     @Override
