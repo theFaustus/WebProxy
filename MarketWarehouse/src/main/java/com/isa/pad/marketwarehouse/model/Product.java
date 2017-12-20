@@ -1,36 +1,48 @@
 package com.isa.pad.marketwarehouse.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import org.springframework.data.annotation.Id;
+import org.springframework.hateoas.ResourceSupport;
+
+import javax.xml.bind.annotation.XmlRootElement;
 import java.math.BigDecimal;
 
 /**
  * Created by Faust on 12/20/2017.
  */
-public class Product {
-
-    private String id;
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonPropertyOrder("product")
+@XmlRootElement(name = "product")
+public class Product extends ResourceSupport {
+    @Id
+    private String productId;
+    @JsonProperty("name")
     private String name;
-
+    @JsonProperty("unitprice")
     private BigDecimal unitPrice;
-
+    @JsonProperty("code")
     private String code;
 
     public Product() {
     }
 
-    public Product(String id, String name, BigDecimal unitPrice, String code) {
-        this.id = id;
+    public Product(String productId, String name, BigDecimal unitPrice, String code) {
+        this.productId = productId;
         this.name = name;
         this.unitPrice = unitPrice;
         this.code = code;
     }
 
-    public String getId() {
-        return id;
+    public String getProductId() {
+        return productId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setProductId(String productId) {
+        this.productId = productId;
     }
 
     public String getName() {
@@ -64,7 +76,7 @@ public class Product {
 
         Product product = (Product) o;
 
-        if (getId() != null ? !getId().equals(product.getId()) : product.getId() != null) return false;
+        if (getProductId() != null ? !getProductId().equals(product.getProductId()) : product.getProductId() != null) return false;
         if (getName() != null ? !getName().equals(product.getName()) : product.getName() != null) return false;
         if (getUnitPrice() != null ? !getUnitPrice().equals(product.getUnitPrice()) : product.getUnitPrice() != null)
             return false;
@@ -74,7 +86,7 @@ public class Product {
 
     @Override
     public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
+        int result = getProductId() != null ? getProductId().hashCode() : 0;
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getUnitPrice() != null ? getUnitPrice().hashCode() : 0);
         result = 31 * result + (getCode() != null ? getCode().hashCode() : 0);
@@ -84,7 +96,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "id='" + id + '\'' +
+                "productId='" + productId + '\'' +
                 ", name='" + name + '\'' +
                 ", unitPrice=" + unitPrice +
                 ", code='" + code + '\'' +

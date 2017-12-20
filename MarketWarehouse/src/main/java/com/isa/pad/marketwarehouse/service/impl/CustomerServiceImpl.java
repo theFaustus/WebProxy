@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<Customer> findByAnyField(String q) {
-        return customerRepository.findByFirstName(q);
+        return customerRepository.findByFirstNameIgnoreCaseContainingOrLastNameIgnoreCaseContainingOrAddressIgnoreCaseContaining(q);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean customerExists(Customer c) {
-        return customerRepository.equals(c);
+        return customerRepository.exists(c.getCustomerId());
     }
 
     @Override
