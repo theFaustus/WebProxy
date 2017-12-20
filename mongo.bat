@@ -1,0 +1,1 @@
+"C:\Program Files\MongoDB\Server\3.6\bin\mongod" --dbpath D:\UTM\PAD\Lab_4\WebProxy\warehouse-data\db
