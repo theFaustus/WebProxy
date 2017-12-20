@@ -1,7 +1,6 @@
 package com.isa.pad.marketwarehouse.model;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.hateoas.ResourceSupport;
 
@@ -10,10 +9,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Created by Faust on 12/20/2017.
  */
-@XmlRootElement
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonPropertyOrder("customer")
+@XmlRootElement(name = "customer")
 public class Customer extends ResourceSupport {
     @Id
-    @JsonProperty("customerID")
     private String customerId;
     @JsonProperty("firstName")
     private String firstName;
@@ -24,7 +25,7 @@ public class Customer extends ResourceSupport {
 
     public Customer() {
     }
-    @JsonCreator
+
     public Customer(String firstName, String lastName, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
