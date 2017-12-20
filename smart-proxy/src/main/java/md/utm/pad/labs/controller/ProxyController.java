@@ -1,6 +1,7 @@
 package md.utm.pad.labs.controller;
 
 import md.utm.pad.labs.exception.UnknownHttpMethodException;
+import md.utm.pad.labs.service.LoadBalancerService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -18,7 +19,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -35,13 +35,13 @@ public class ProxyController {
     }
 
     @Autowired
-    private List<URI> warehouses;
+    private LoadBalancerService loadBalancerService;
 
     @RequestMapping(value = "/**",
             method = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.HEAD })
     public ResponseEntity<String> handleRequest(HttpServletRequest request) {
         RestTemplate template = new RestTemplate();
-        URI servingNodeUri = warehouses.get(0);
+        URI servingNodeUri = loadBalancerService.getServingNode();
         String requestURI = request.getRequestURI();
         String warehouseUri = servingNodeUri.toString() + requestURI;
         LOGGER.info("Sending the request to: " + warehouseUri);
