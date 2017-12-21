@@ -88,20 +88,35 @@ public class MarketWarehouseApplication extends WebMvcConfigurerAdapter {
 			orderRepository.deleteAll();
 
 			Product butter = new Product("Butter", new BigDecimal(45.00), "BUTTER897632SD");
-			productRepository.save(butter);
+            Product water = new Product("Water", new BigDecimal(12.00), "RESAN782785SD");
+            Product bread = new Product("Bread", new BigDecimal(3.00), "FRANZ25935SD");
+            productRepository.save(butter);
+            productRepository.save(water);
+            productRepository.save(bread);
 
-			OrderLine butterItem = new OrderLine(butter, 2);
-			orderLineRepository.save(butterItem);
+			OrderLine butterLine = new OrderLine(butter, 2);
+			orderLineRepository.save(butterLine);
 
-			List<Customer> customers = customerRepository.findByFirstNameAndLastName("Mike", "Spike");
+            OrderLine waterLine = new OrderLine(water, 1);
+            orderLineRepository.save(waterLine);
 
-			Order order = new Order(customers.get(0));
-			order.add(butterItem);
-			orderRepository.save(order);
+            OrderLine breadLine = new OrderLine(bread, 3);
+            orderLineRepository.save(breadLine);
+
+			List<Customer> mikes = customerRepository.findByFirstNameAndLastName("Mike", "Spike");
+			List<Customer> johns = customerRepository.findByFirstNameAndLastName("John", "Lennon");
+
+			Order mikeOrder = new Order(johns.get(0));
+			mikeOrder.add(butterLine);
+			orderRepository.save(mikeOrder);
+
+            Order johnOrder = new Order(johns.get(0));
+            johnOrder.add(waterLine);
+            orderRepository.save(johnOrder);
 
 			for (Order o : orderRepository.findAll()) {
 				LOGGER.info("Order: " + o);
-				LOGGER.info("Order itemd: " + o.getOrderLineList());
+				LOGGER.info("OrderLine: " + o.getOrderLineList());
 				LOGGER.info("---------------------------");
 			}
 		};
