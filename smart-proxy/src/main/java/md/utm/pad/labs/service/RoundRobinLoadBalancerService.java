@@ -86,7 +86,7 @@ public class RoundRobinLoadBalancerService implements LoadBalancerService, Runna
     private boolean isNodeUp(URI nodeUri) {
         try {
             RestTemplate template = new RestTemplate();
-            template.headForHeaders(nodeUri.toString());
+            template.headForHeaders(nodeUri.toString() + "/customers/list/");
         } catch (Exception e) {
             LOGGER.info("Node: " + nodeUri + " is down.");
             return false;

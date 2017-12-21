@@ -25,6 +25,7 @@ public class CacheManager {
     private HashOperations<String, String, String> hashOperations;
 
     private final Map<String, AtomicLong> cacheHits = new ConcurrentHashMap<>();
+    private final Map<String, String> cachedContentTypes = new ConcurrentHashMap<>();
 
     private final Lock lock = new ReentrantLock();
 
@@ -65,11 +66,12 @@ public class CacheManager {
         }
     }
 
-    public void put(String key, String value) {
+    public void put(String key, String value, String contentType) {
         try {
             lock.lock();
             cacheHits.put(key, new AtomicLong());
             hashOperations.put(KEY, key, value);
+            cachedContentTypes.put(key, contentType != null ? contentType : "text/plain");
         } finally {
             lock.unlock();
         }
@@ -81,8 +83,13 @@ public class CacheManager {
             cacheHits.remove(key);
             hashOperations.delete(KEY, key);
             redisTemplate.delete(key);
+            cachedContentTypes.remove(key);
         } finally {
             lock.unlock();
         }
+    }
+
+    public String getContentTypeFor(String key) {
+        return cachedContentTypes.getOrDefault(key, "text/plain");
     }
 }

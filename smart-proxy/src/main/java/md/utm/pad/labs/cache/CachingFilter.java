@@ -34,14 +34,15 @@ public class CachingFilter implements Filter {
             String key = makeKey(request);
             if (cacheManager.containsKey(key)) {
                 LOGGER.info("Cache hit. Sending response from Redis.");
-                writeResponse(response, cacheManager.getValue(key));
+                writeResponse(response, cacheManager.getValue(key), cacheManager.getContentTypeFor(key));
             } else {
                 LOGGER.info("Cache miss. Sending request to data warehouse and memorizing the response.");
                 SimpleHttpServletResponseWrapper responseWrapper = new SimpleHttpServletResponseWrapper((HttpServletResponse) response);
                 filterChain.doFilter(request, responseWrapper);
                 String responseBody = responseWrapper.getResponseBody();
-                cacheManager.put(key, responseBody);
-                writeResponse(response, responseBody);
+                String contentType = responseWrapper.getContentType();
+                cacheManager.put(key, responseBody, contentType);
+                writeResponse(response, responseBody, cacheManager.getContentTypeFor(key));
             }
         } else {
             filterChain.doFilter(request, response);
@@ -52,8 +53,10 @@ public class CachingFilter implements Filter {
         return request.getRequestURI() + "-" + request.getHeader("Accept");
     }
 
-    private void writeResponse(ServletResponse response, String responseBody) {
-        try (PrintWriter out = response.getWriter()) {
+    private void writeResponse(ServletResponse response, String responseBody, String contentType) {
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
+        try (PrintWriter out = httpResponse.getWriter()) {
+            httpResponse.setContentType(contentType);
             out.println(responseBody);
             out.flush();
         } catch (IOException e) {
